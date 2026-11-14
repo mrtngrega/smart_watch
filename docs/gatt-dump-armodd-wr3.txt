@@ -1,0 +1,67 @@
+﻿name: ARMODD Wr3(ID-B519)  status: Disconnected
+services: Success (1 1 1 1 1 1 1 1 1 1)
+SERVICE 00001801-0000-1000-8000-00805f9b34fb
+  CHAR 00002a05-0000-1000-8000-00805f9b34fb props=Indicate
+  CHAR 00002b3a-0000-1000-8000-00805f9b34fb props=Read value=00
+SERVICE 00001800-0000-1000-8000-00805f9b34fb
+  CHAR 00002a00-0000-1000-8000-00805f9b34fb props=Read value=41
+  CHAR 00002a01-0000-1000-8000-00805f9b34fb props=Read value=00
+  CHAR 00002a04-0000-1000-8000-00805f9b34fb props=Read value=00
+  CHAR 00002aa6-0000-1000-8000-00805f9b34fb props=Read value=00
+SERVICE 000055ff-0000-1000-8000-00805f9b34fb
+  CHAR 000033f1-0000-1000-8000-00805f9b34fb props=Read, Write value=08
+  CHAR 000033f2-0000-1000-8000-00805f9b34fb props=Notify
+SERVICE 000056ff-0000-1000-8000-00805f9b34fb
+  CHAR 000034f1-0000-1000-8000-00805f9b34fb props=Read, WriteWithoutResponse value=00
+  CHAR 000034f2-0000-1000-8000-00805f9b34fb props=Notify
+SERVICE 000060ff-0000-1000-8000-00805f9b34fb
+  CHAR 00006001-0000-1000-8000-00805f9b34fb props=Read, Write value=00
+  CHAR 00006002-0000-1000-8000-00805f9b34fb props=Notify
+SERVICE 000061ff-0000-1000-8000-00805f9b34fb
+  CHAR 00006101-0000-1000-8000-00805f9b34fb props=Read, WriteWithoutResponse value=00
+  CHAR 00006102-0000-1000-8000-00805f9b34fb props=Notify
+SERVICE 0000180f-0000-1000-8000-00805f9b34fb
+  CHAR 00002a19-0000-1000-8000-00805f9b34fb props=Read, Notify value=64
+SERVICE 0000d0ff-3c17-d293-8e48-14fe2e4da212
+  CHAR 0000ffd1-0000-1000-8000-00805f9b34fb props=WriteWithoutResponse
+  CHAR 0000ffd2-0000-1000-8000-00805f9b34fb props=Read value=78
+  CHAR 0000ffd3-0000-1000-8000-00805f9b34fb props=Read read=ProtocolError
+  CHAR 0000ffd4-0000-1000-8000-00805f9b34fb props=Read read=ProtocolError
+  CHAR 0000fff1-0000-1000-8000-00805f9b34fb props=Read value=0B
+  CHAR 0000ffe0-0000-1000-8000-00805f9b34fb props=Read value=00
+powershell : Exception calling "ReadBytes" with "1" argument(s): "The operation attempted to access data outside the va
+lid range
+At line:10 char:8
++ $res = powershell -NoProfile -File $f 2>&1 | Out-String
++        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Exception calli...the valid range:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+The operation attempted to access data outside the valid range
+"
+At C:\My files\Code\Projects\armodd-watch\tools\gatt-dump.ps1:21 char:182
++ ... t]$r.Value.Length; $b=New-Object byte[] $n; $rd.ReadBytes($b); $line+ ...
++                                                 ~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:) [], MethodInvocationException
+    + FullyQualifiedErrorId : Exception
+ 
+  CHAR 0000ffe1-0000-1000-8000-00805f9b34fb props=Read value=00
+  CHAR 0000fff3-0000-1000-8000-00805f9b34fb props=Read value=14
+  CHAR 0000fff4-0000-1000-8000-00805f9b34fb props=Read value=09
+Exception calling "ReadBytes" with "1" argument(s): "The operation attempted to access data outside the valid range
+The operation attempted to access data outside the valid range
+"
+At C:\My files\Code\Projects\armodd-watch\tools\gatt-dump.ps1:21 char:182
++ ... t]$r.Value.Length; $b=New-Object byte[] $n; $rd.ReadBytes($b); $line+ ...
++                                                 ~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:) [], MethodInvocationException
+    + FullyQualifiedErrorId : Exception
+ 
+  CHAR 0000fff5-0000-1000-8000-00805f9b34fb props=Read value=00
+SERVICE 00006287-3c17-d293-8e48-14fe2e4da212
+  CHAR 00006387-3c17-d293-8e48-14fe2e4da212 props=WriteWithoutResponse
+  CHAR 00006487-3c17-d293-8e48-14fe2e4da212 props=Write, Notify
+SERVICE 000002fd-3c17-d293-8e48-14fe2e4da212
+  CHAR 0000fd03-0000-1000-8000-00805f9b34fb props=WriteWithoutResponse, Write
+  CHAR 0000fd04-0000-1000-8000-00805f9b34fb props=Notify
+
