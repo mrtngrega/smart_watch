@@ -1,43 +1,24 @@
 # smart_watch
 
-Customizing a cheap ARMODD Wr3 smartwatch (Realtek Bee-series chip, BLE address 78:02:B7:28:B5:19, companion app GloryFit): strip it down to what the user wants, through the app's settings first. Possibly a reverse-engineered BLE protocol so a small PC/phone tool can sync time, steps and heart rate without the vendor app. The user has a second, similar watch that may be used for firmware experiments (the ARMODD stays untouched by firmware work).
+Tinkering with the user's smartwatches from the PC. Repo: github.com/mrtngrega/smart_watch (public).
 
-Repo: github.com/mrtngrega/smart_watch (public; renamed from armodd-watch on 2026-11-14). The local folder is still named armodd-watch until the chat that holds it is closed, then rename it to smart_watch.
+## Amazfit GTS 4 Mini (active)
 
-## Wanted features (the user's list, 2026-11-14)
+Zepp OS. For watch faces, mini-apps or Gadgetbridge; no firmware flashing. Nothing done on it yet.
+From memory, not checked: Zepp OS has watch-face tools and a JS mini-app SDK (developer mode); Gadgetbridge supports it (needs an auth key from the Zepp app); there's no custom firmware.
 
-Keep only: time, date and similar, blood pressure, heart rate, step counting. Everything else off or hidden. Also a custom watch face made with Harv.
+## ARMODD Wr3 (shelved 2026-11-14)
 
-## Known facts
+The user stopped this one. Only the useful findings are kept, in `docs/armodd-wr3/`:
+- `protocol.md`: BLE command channel and the known commands, from GloryFit 4.0.12 decompiled.
+- `gatt-dump.txt`: its full list of BLE services.
 
-- Watch shows up on Windows as "ARMODD Wr3 (ID-B519)": paired as Bluetooth audio/calls device (HFP, A2DP) plus BLE with 10 services (battery 0x180F and vendor ones).
-- Realtek firmware is closed; no public custom firmware. Firmware flashing over BLE can brick it, so firmware work only on the second watch, only with the user's OK.
+Lessons worth keeping:
+- Realtek chip, closed firmware, no custom firmware. The OTA/DFU services are never written (a brick risk).
+- The watch only advertises while its screen is on (15 s max), and BLE connects from Windows were flaky: 2 out of about 8 tries worked.
+- Windows paired it as a classic audio/call device too; that link may block LE. It is no longer paired with the PC.
+- GloryFit can't run on Windows (emulators get no Bluetooth).
+- bleak on Windows: find the device by scanning first (`find_device_by_address`); connecting by address alone fails. PowerShell 5.1 can't subscribe to WinRT events, so use Python for BLE.
 - Blood pressure on such watches is a light-sensor estimate, not a real measurement.
 
-## Status
-
-Started 2026-11-14. The user unpaired the watch from the phone and wants full control from the PC (GloryFit can't run on Windows: emulators get no Bluetooth). The PC connects over BLE (no pairing needed), reads battery (reports 100%, maybe not trustworthy) and can subscribe to all vendor notify channels; the watch sends nothing unprompted (20 s listen). The GloryFit custom dial only allows background and font colour.
-
-Next (after the weekly plan reset, Tue 17 Nov): download the GloryFit Android APK into its own folder, decompile it with jadx (Java 25 is installed) and read the command format (time sync, steps, heart rate, settings, watch-face upload), then build our own PC tool.
-
-Where it stopped (2026-11-14, end of session): `tools/cmd.py a1` (read version) never reached the watch: since the audio entries were disabled the watch hardly advertises (seen once after 61 s, then invisible for 90 s twice) while Windows' base classic link shows CONNECTED. Next: toggle the PC's Bluetooth off/on, then `cmd.py a1` with the watch awake; if still invisible, re-enable audio (`tools/headset-off.ps1 -Enable`, admin) since it connected before that. Then read the reply format on `33f2`, and the step/heart-rate/settings commands.
-
-Second watch: Amazfit GTS 4 Mini (Zepp OS). From memory, not checked: Zepp OS watch-face tools and JS mini-app SDK (developer mode), Gadgetbridge supports it (needs an auth key from the Zepp app), no custom firmware. Use it for faces/mini-apps, not flashing.
-
-## Gotchas
-
-- The watch stops advertising when asleep (screen timeout max 15 s): wake it before connecting; a paired watch is "unreachable" with the screen off.
-- BLE connects are flaky (2026-11-14): worked twice (paired, awake), timed out 5 times even when the watch was visible, also with a 60 s limit. Unpaired never worked. During the last failure Windows' classic headset link (HFP/A2DP) to the watch was CONNECTED; suspect it blocks the LE link. Done 2026-11-14: audio entries disabled with `tools/headset-off.ps1` (undo: `-Enable`, admin); BLE still failed (found after 61 s, then "disconnected" while connecting).
-- **Classic serial port works:** the watch exposes SPP, Windows maps it to COM4; opening COM4 succeeds at once (no screen wake needed?). Silent when only listening (0 bytes in 15 s). Candidate channel for commands once the protocol is known.
-- bleak on Windows: scan for the device first (`find_device_by_address`), connecting by address alone fails with "not found".
-- Windows PowerShell 5.1 can't subscribe to WinRT events (no BLE scanning/notifications there); use the Python tools.
-
-## Stack
-
-Python 3.14 + bleak 3.1 in `.venv` (gitignored). `tools/gatt-dump.ps1` is the older read-only PowerShell dump.
-
-## Commands
-
-- `.venv/Scripts/python tools/scan.py 12`: scan for BLE devices, marks the watch.
-- `.venv/Scripts/python tools/listen.py 20`: connect, read battery, print every notification for 20 s.
-- `.venv/Scripts/python tools/cmd.py a1`: send one command (a1 version, a2 battery, time = sync clock) and print replies. Protocol in `docs/protocol.md`.
+The removed Python tools (scan, listen, cmd, unpair, headset-off, gatt-dump) are in git history at commit e589614.
