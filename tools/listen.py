@@ -13,10 +13,10 @@ BATTERY = "00002a19-0000-1000-8000-00805f9b34fb"
 
 
 async def main(seconds: float) -> None:
-    dev = await BleakScanner.find_device_by_address(WATCH, timeout=20)
+    dev = await BleakScanner.find_device_by_address(WATCH, timeout=60)
     if dev is None:
         sys.exit("watch not advertising")
-    async with BleakClient(dev, timeout=20) as client:
+    async with BleakClient(dev, timeout=20, pair="--pair" in sys.argv) as client:
         print("connected, mtu", client.mtu_size)
         print("battery", (await client.read_gatt_char(BATTERY))[0], "%")
         t0 = time.monotonic()
@@ -37,4 +37,4 @@ async def main(seconds: float) -> None:
         await asyncio.sleep(seconds)
 
 
-asyncio.run(main(float(sys.argv[1]) if len(sys.argv) > 1 else 20))
+asyncio.run(main(float(sys.argv[1]) if len(sys.argv) > 1 and sys.argv[1][0].isdigit() else 20))
