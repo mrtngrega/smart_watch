@@ -5,6 +5,8 @@ Tinkering with the user's smartwatches from the PC. Repo: github.com/mrtngrega/s
 ## Amazfit GTS 4 Mini (active)
 
 Zepp OS. For watch faces, mini-apps or Gadgetbridge; no firmware flashing. Nothing done on it yet.
+
+Seen 2026-11-14 (Windows PnP, read-only, no connection made): it is paired with the PC as a BLE device ("Amazfit GTS 4 Mini", status OK, address FEB11C3AED0F). Its GATT services: standard battery (180F), heart rate (180D), alert notification (1811), device info (180A), HID consumer control (1812, the watch can act as a media remote), plus Huami vendor services FEE0, FEE1, 3802, CC353442-BE58-4EA2-876E-11D8D6976366 and 00001530-0000-3512-2118-0009AF100700. From memory, not checked: FEE0/FEE1 carry Huami's auth and data channel (what Gadgetbridge uses), and 1530-... is the firmware-update (DFU) service. Never write to the DFU service (brick risk).
 From memory, not checked: Zepp OS has watch-face tools and a JS mini-app SDK (developer mode); Gadgetbridge supports it (needs an auth key from the Zepp app); there's no custom firmware.
 
 ## ARMODD Wr3 (shelved 2026-11-14)
