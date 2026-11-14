@@ -36,3 +36,4 @@ Python 3.14 + bleak 3.1 in `.venv` (gitignored). `tools/gatt-dump.ps1` is the ol
 
 - `.venv/Scripts/python tools/scan.py 12`: scan for BLE devices, marks the watch.
 - `.venv/Scripts/python tools/listen.py 20`: connect, read battery, print every notification for 20 s.
+- `.venv/Scripts/python tools/cmd.py a1`: send one command (a1 version, a2 battery, time = sync clock) and print replies. Protocol in `docs/protocol.md`.
