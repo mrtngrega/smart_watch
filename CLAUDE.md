@@ -16,12 +16,21 @@ Keep only: time, date and similar, blood pressure, heart rate, step counting. Ev
 
 ## Status
 
-Started 2026-11-14. Nothing built yet. Next: debloat via GloryFit settings, then the custom face, then (optional) BLE protocol work.
+Started 2026-11-14. The user unpaired the watch from the phone and wants full control from the PC (GloryFit can't run on Windows: emulators get no Bluetooth). The PC connects over BLE (no pairing needed), reads battery (reports 100%, maybe not trustworthy) and can subscribe to all vendor notify channels; the watch sends nothing unprompted (20 s listen). The GloryFit custom dial only allows background and font colour.
+
+Next (after the weekly plan reset, Tue 17 Nov): download the GloryFit Android APK into its own folder, decompile it with jadx (Java 25 is installed) and read the command format (time sync, steps, heart rate, settings, watch-face upload), then build our own PC tool.
+
+## Gotchas
+
+- The watch stops advertising when asleep: wake it (button) before connecting.
+- bleak on Windows: scan for the device first (`find_device_by_address`), connecting by address alone fails with "not found".
+- Windows PowerShell 5.1 can't subscribe to WinRT events (no BLE scanning/notifications there); use the Python tools.
 
 ## Stack
 
-Not decided yet.
+Python 3.14 + bleak 3.1 in `.venv` (gitignored). `tools/gatt-dump.ps1` is the older read-only PowerShell dump.
 
 ## Commands
 
-None yet.
+- `.venv/Scripts/python tools/scan.py 12`: scan for BLE devices, marks the watch.
+- `.venv/Scripts/python tools/listen.py 20`: connect, read battery, print every notification for 20 s.
