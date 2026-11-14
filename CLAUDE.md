@@ -22,7 +22,8 @@ Next (after the weekly plan reset, Tue 17 Nov): download the GloryFit Android AP
 
 ## Gotchas
 
-- The watch stops advertising when asleep: wake it (button) before connecting.
+- The watch stops advertising when asleep (screen timeout max 15 s): wake it before connecting; a paired watch is "unreachable" with the screen off.
+- BLE connects are flaky (2026-11-14): worked twice (paired, awake), timed out 5 times even when the watch was visible, also with a 60 s limit. Unpaired never worked. During the last failure Windows' classic headset link (HFP/A2DP) to the watch was CONNECTED; suspect it blocks the LE link. Next try: disable the watch's audio services in Windows (admin), then connect.
 - bleak on Windows: scan for the device first (`find_device_by_address`), connecting by address alone fails with "not found".
 - Windows PowerShell 5.1 can't subscribe to WinRT events (no BLE scanning/notifications there); use the Python tools.
 
