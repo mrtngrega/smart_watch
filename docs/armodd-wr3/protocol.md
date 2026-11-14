@@ -1,5 +1,7 @@
 # ARMODD Wr3 BLE protocol (from GloryFit)
 
+Shelved on 2026-11-14: kept as reference only.
+
 Source: GloryFit 4.0.12 (`com.yc.gloryfit`), decompiled with jadx 1.5.6 on 2026-11-14. Main files: `com/yc/pedometer/sdk/WriteCommandToBLE.java` (commands), `com/yc/pedometer/utils/UUIDUtils.java` (UUIDs). The app bundles Realtek's DFU SDK (`com.realsil.sdk.dfu`), so the chip is Realtek.
 
 ## Channels
@@ -23,6 +25,6 @@ Source: GloryFit 4.0.12 (`com.yc.gloryfit`), decompiled with jadx 1.5.6 on 2026-
 
 Replies arrive as notifications on `33f2`; their format is still to be read (the parser is the class handling `ONLY_READ_UUID`).
 
-Commands for BLE: `.venv/Scripts/python tools/cmd.py a1` (see the tool).
+The Python BLE tools (scan, listen, cmd, unpair) were removed when the watch was shelved; they are in git history at commit e589614.
 
 Not yet looked up: steps, heart rate, settings (raise-to-wake, screen timeout), watch-face upload.
