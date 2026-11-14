@@ -20,6 +20,10 @@ Started 2026-11-14. The user unpaired the watch from the phone and wants full co
 
 Next (after the weekly plan reset, Tue 17 Nov): download the GloryFit Android APK into its own folder, decompile it with jadx (Java 25 is installed) and read the command format (time sync, steps, heart rate, settings, watch-face upload), then build our own PC tool.
 
+Where it stopped (2026-11-14, end of session): `tools/cmd.py a1` (read version) never reached the watch: since the audio entries were disabled the watch hardly advertises (seen once after 61 s, then invisible for 90 s twice) while Windows' base classic link shows CONNECTED. Next: toggle the PC's Bluetooth off/on, then `cmd.py a1` with the watch awake; if still invisible, re-enable audio (`tools/headset-off.ps1 -Enable`, admin) since it connected before that. Then read the reply format on `33f2`, and the step/heart-rate/settings commands.
+
+Second watch: Amazfit GTS 4 Mini (Zepp OS). From memory, not checked: Zepp OS watch-face tools and JS mini-app SDK (developer mode), Gadgetbridge supports it (needs an auth key from the Zepp app), no custom firmware. Use it for faces/mini-apps, not flashing.
+
 ## Gotchas
 
 - The watch stops advertising when asleep (screen timeout max 15 s): wake it before connecting; a paired watch is "unreachable" with the screen off.
