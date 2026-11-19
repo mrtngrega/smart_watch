@@ -66,7 +66,24 @@ def hand(deg, length, width, color, tail=0, cap="round"):
 
 def svg(body):
     return (f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}">\n'
-            f'<defs><clipPath id="screen"><rect width="{W}" height="{H}" rx="{CORNER}"/></clipPath></defs>\n'
+            f'<defs><clipPath id="screen"><rect width="{W}" height="{H}" rx="{CORNER}"/></clipPath>\n'
+            # chrome: bright/dark bands across the screen; userSpaceOnUse so thin vertical lines still get it
+            f'<linearGradient id="chrome" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="{W}" y2="{H}">'
+            '<stop offset="0" stop-color="#f4f6f8"/><stop offset="0.18" stop-color="#9aa1a9"/>'
+            '<stop offset="0.36" stop-color="#ffffff"/><stop offset="0.52" stop-color="#7b838c"/>'
+            '<stop offset="0.7" stop-color="#e3e7ea"/><stop offset="0.86" stop-color="#8d949c"/>'
+            '<stop offset="1" stop-color="#f4f6f8"/></linearGradient>\n'
+            # chrome text: sharp horizontal bands over the date line's width
+            f'<linearGradient id="chromeText" gradientUnits="userSpaceOnUse" x1="{CX-100}" y1="0" x2="{CX+100}" y2="0">'
+            '<stop offset="0" stop-color="#b9c0c7"/><stop offset="0.2" stop-color="#ffffff"/>'
+            '<stop offset="0.32" stop-color="#6c747d"/><stop offset="0.5" stop-color="#f6f8fa"/>'
+            '<stop offset="0.68" stop-color="#7f8790"/><stop offset="0.82" stop-color="#ffffff"/>'
+            '<stop offset="1" stop-color="#aab1b8"/></linearGradient>\n'
+            # chrome dome for the centre cap
+            '<radialGradient id="chromeDome" cx="0.35" cy="0.3" r="0.8">'
+            '<stop offset="0" stop-color="#ffffff"/><stop offset="0.35" stop-color="#c9ced3"/>'
+            '<stop offset="0.6" stop-color="#6a727b"/><stop offset="0.85" stop-color="#d9dde1"/>'
+            '<stop offset="1" stop-color="#8b939b"/></radialGradient></defs>\n'
             f'<rect width="{W}" height="{H}" fill="#111"/>\n'
             f'<g clip-path="url(#screen)"><rect width="{W}" height="{H}" fill="#000"/>\n{body}\n</g></svg>\n')
 
@@ -141,11 +158,12 @@ def design_d():
     return svg(f"""
 {ticks(8, 18, 7, 4, 2, between=3)}
 <text x="{CX}" y="{CY+92}" text-anchor="middle" {FONT} font-size="48" font-weight="300" fill="#eee">10:09</text>
-<text x="{CX}" y="{CY+120}" text-anchor="middle" {FONT} font-size="18" letter-spacing="3" fill="{TEAL}">THU · 19 NOV</text>
+<text x="{CX}" y="{CY+120}" text-anchor="middle" {FONT} font-size="18" letter-spacing="3" fill="url(#chromeText)">THU · 19 NOV</text>
 {hand(h, 78, 7, "#eee")}
 {hand(m, 128, 5, "#eee")}
-{hand(s, 140, 2, TEAL, tail=24)}
-<circle cx="{CX}" cy="{CY}" r="6" fill="{TEAL}"/><circle cx="{CX}" cy="{CY}" r="2.5" fill="#000"/>
+{hand(s, 140, 3.5, "#7d858e", tail=24)}
+{hand(s, 138, 1.2, "#ffffff", tail=22)}
+<circle cx="{CX}" cy="{CY}" r="7.5" fill="url(#chromeDome)"/><circle cx="{CX}" cy="{CY}" r="2.5" fill="#000"/>
 """)
 
 

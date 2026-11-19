@@ -1,5 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="336" height="384" viewBox="0 0 336 384">
-<defs><clipPath id="screen"><rect width="336" height="384" rx="80"/></clipPath></defs>
+<defs><clipPath id="screen"><rect width="336" height="384" rx="80"/></clipPath>
+<linearGradient id="chrome" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="336" y2="384"><stop offset="0" stop-color="#f4f6f8"/><stop offset="0.18" stop-color="#9aa1a9"/><stop offset="0.36" stop-color="#ffffff"/><stop offset="0.52" stop-color="#7b838c"/><stop offset="0.7" stop-color="#e3e7ea"/><stop offset="0.86" stop-color="#8d949c"/><stop offset="1" stop-color="#f4f6f8"/></linearGradient>
+<linearGradient id="chromeText" gradientUnits="userSpaceOnUse" x1="68.0" y1="0" x2="268.0" y2="0"><stop offset="0" stop-color="#b9c0c7"/><stop offset="0.2" stop-color="#ffffff"/><stop offset="0.32" stop-color="#6c747d"/><stop offset="0.5" stop-color="#f6f8fa"/><stop offset="0.68" stop-color="#7f8790"/><stop offset="0.82" stop-color="#ffffff"/><stop offset="1" stop-color="#aab1b8"/></linearGradient>
+<radialGradient id="chromeDome" cx="0.35" cy="0.3" r="0.8"><stop offset="0" stop-color="#ffffff"/><stop offset="0.35" stop-color="#c9ced3"/><stop offset="0.6" stop-color="#6a727b"/><stop offset="0.85" stop-color="#d9dde1"/><stop offset="1" stop-color="#8b939b"/></radialGradient></defs>
 <rect width="336" height="384" fill="#111"/>
 <g clip-path="url(#screen)"><rect width="336" height="384" fill="#000"/>
 
@@ -52,10 +55,11 @@
 <line x1="118.7" y1="8.0" x2="120.6" y2="15.0" stroke="#555" stroke-width="2" stroke-linecap="round"/>
 <line x1="143.8" y1="8.0" x2="144.7" y2="15.0" stroke="#555" stroke-width="2" stroke-linecap="round"/>
 <text x="168.0" y="284.0" text-anchor="middle" font-family="Segoe UI, Roboto, sans-serif" font-size="48" font-weight="300" fill="#eee">10:09</text>
-<text x="168.0" y="312.0" text-anchor="middle" font-family="Segoe UI, Roboto, sans-serif" font-size="18" letter-spacing="3" fill="#2ec4b6">THU · 19 NOV</text>
+<text x="168.0" y="312.0" text-anchor="middle" font-family="Segoe UI, Roboto, sans-serif" font-size="18" letter-spacing="3" fill="url(#chromeText)">THU · 19 NOV</text>
 <line x1="168.0" y1="192.0" x2="103.7" y2="147.8" stroke="#eee" stroke-width="7" stroke-linecap="round"/>
 <line x1="168.0" y1="192.0" x2="276.1" y2="123.4" stroke="#eee" stroke-width="5" stroke-linecap="round"/>
-<line x1="182.1" y1="172.6" x2="85.7" y2="305.3" stroke="#2ec4b6" stroke-width="2" stroke-linecap="round"/>
-<circle cx="168.0" cy="192.0" r="6" fill="#2ec4b6"/><circle cx="168.0" cy="192.0" r="2.5" fill="#000"/>
+<line x1="182.1" y1="172.6" x2="85.7" y2="305.3" stroke="#7d858e" stroke-width="3.5" stroke-linecap="round"/>
+<line x1="180.9" y1="174.2" x2="86.9" y2="303.6" stroke="#ffffff" stroke-width="1.2" stroke-linecap="round"/>
+<circle cx="168.0" cy="192.0" r="7.5" fill="url(#chromeDome)"/><circle cx="168.0" cy="192.0" r="2.5" fill="#000"/>
 
 </g></svg>
