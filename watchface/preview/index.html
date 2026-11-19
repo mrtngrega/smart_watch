@@ -17,16 +17,13 @@
   .digits { font-family: "Segoe UI", Roboto, sans-serif; }
 
   /* Liquid glass hands (design E) */
-  .glass { position: absolute; border-radius: 999px;
-           background: linear-gradient(90deg, rgba(255,255,255,.34), rgba(255,255,255,.07) 35%, rgba(255,255,255,.03) 65%, rgba(255,255,255,.26));
-           backdrop-filter: blur(2.5px) brightness(1.9) saturate(1.6);
-           border: 1px solid rgba(255,255,255,.6);
-           box-shadow: inset 0 1px 2px rgba(255,255,255,.55), inset 0 -1px 3px rgba(255,255,255,.18), 0 3px 10px rgba(0,0,0,.7); }
-  .glass::after { content: ""; position: absolute; left: 22%; top: 6px; bottom: 6px; width: 18%; border-radius: 999px;
-                  background: linear-gradient(180deg, rgba(255,255,255,.75), rgba(255,255,255,.1)); opacity: .55; }
-  .glass.sec::after { display: none; }
-  .glass.sec { background: rgba(255,255,255,.14); border-color: rgba(255,255,255,.8); }
-  .glass.cap { border-radius: 50%; }
+  /* Liquid glass hands: a see-through pointed blade (clip-path) with an SVG edge and highlight on top. No backdrop-filter: it left a box around the blade and the watch can't do it. */
+  .hand { position: absolute; }
+  .hand .blade { position: absolute; inset: 0;
+                 background: linear-gradient(90deg, rgba(255,255,255,.38), rgba(255,255,255,.1) 40%, rgba(255,255,255,.08) 60%, rgba(255,255,255,.32)); }
+  .hand svg { position: absolute; inset: 0; overflow: visible; filter: drop-shadow(0 2px 5px rgba(0,0,0,.65)); }
+  .hand.cap { border-radius: 50%; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.7);
+              backdrop-filter: blur(1.5px) brightness(1.6); box-shadow: inset 0 1px 2px rgba(255,255,255,.7), 0 2px 5px rgba(0,0,0,.6); }
 </style>
 </head>
 <body>
@@ -100,17 +97,29 @@ document.getElementById("e").innerHTML = `<svg width="${W}" height="${H}">
   ${digital("url(#eText)")}
 </svg>`;
 
-function glassHand(face, cls, len, tail, width) {
+// A pointed hand: tip at the top, widest at the pivot, short tail. `width` is the widest point.
+function glassHand(face, len, tail, width, blade = true) {
   const el = document.createElement("div");
-  el.className = "glass " + cls;
+  el.className = "hand";
   Object.assign(el.style, { left: CX - width / 2 + "px", top: CY - len + "px", width: width + "px", height: len + tail + "px",
                             transformOrigin: `50% ${len}px` });
+  const w = width, pts = [[w / 2, 0], [w, len], [w * 0.72, len + tail], [w * 0.28, len + tail], [0, len]];
+  const poly = pts.map(p => p.join(",")).join(" ");
+  const clip = pts.map(([x, y]) => `${x}px ${y}px`).join(", ");
+  el.innerHTML = (blade ? `<div class="blade" style="clip-path: polygon(${clip})"></div>` : "") +
+    `<svg width="${w}" height="${len + tail}">
+       <polygon points="${poly}" fill="${blade ? "none" : "rgba(255,255,255,.55)"}" stroke="rgba(255,255,255,.75)" stroke-width="1" stroke-linejoin="round"/>
+       ${blade ? `<line x1="${w * 0.36}" y1="${len * 0.3}" x2="${w * 0.36}" y2="${len * 0.92}" stroke="rgba(255,255,255,.7)" stroke-width="${Math.max(w * 0.1, 1)}" stroke-linecap="round"/>` : ""}
+     </svg>`;
   face.appendChild(el);
   return el;
 }
 const e = document.getElementById("e");
-const eh = glassHand(e, "", 80, 10, 14), em = glassHand(e, "", 130, 10, 10), es = glassHand(e, "sec", 142, 26, 4);
-const cap = glassHand(e, "cap", 8, 8, 16);
+const eh = glassHand(e, 82, 12, 24), em = glassHand(e, 134, 12, 18), es = glassHand(e, 142, 26, 3, false);
+const cap = document.createElement("div");
+cap.className = "hand cap";
+Object.assign(cap.style, { left: CX - 8 + "px", top: CY - 8 + "px", width: "16px", height: "16px" });
+e.appendChild(cap);
 
 const DAYS = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
 const MONTHS = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
