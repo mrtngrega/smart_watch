@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="336" height="384" viewBox="0 0 336 384">
+<defs><clipPath id="screen"><rect width="336" height="384" rx="80"/></clipPath></defs>
+<rect width="336" height="384" fill="#111"/>
+<g clip-path="url(#screen)"><rect width="336" height="384" fill="#000"/>
+
+<text x="168.0" y="40.0" text-anchor="middle" font-family="Segoe UI, Roboto, sans-serif" font-size="30" font-weight="700" fill="#eee">12</text><text x="306.0" y="202.0" text-anchor="middle" font-family="Segoe UI, Roboto, sans-serif" font-size="30" font-weight="700" fill="#eee">3</text><text x="168.0" y="364.0" text-anchor="middle" font-family="Segoe UI, Roboto, sans-serif" font-size="30" font-weight="700" fill="#eee">6</text><text x="30.0" y="202.0" text-anchor="middle" font-family="Segoe UI, Roboto, sans-serif" font-size="30" font-weight="700" fill="#eee">9</text>
+<circle cx="265.7" cy="22.8" r="4" fill="#888"/><circle cx="314.0" cy="107.7" r="4" fill="#888"/><circle cx="314.0" cy="276.3" r="4" fill="#888"/><circle cx="265.7" cy="361.2" r="4" fill="#888"/><circle cx="70.3" cy="361.2" r="4" fill="#888"/><circle cx="22.0" cy="276.3" r="4" fill="#888"/><circle cx="22.0" cy="107.7" r="4" fill="#888"/><circle cx="70.3" cy="22.8" r="4" fill="#888"/>
+<text x="168.0" y="130.0" text-anchor="middle" font-family="Segoe UI, Roboto, sans-serif" font-size="30" font-weight="300" fill="#eee">10:09</text>
+<text x="168.0" y="152.0" text-anchor="middle" font-family="Segoe UI, Roboto, sans-serif" font-size="13" letter-spacing="2" fill="#2ec4b6">THU · 19 NOV</text>
+<line x1="168.0" y1="192.0" x2="108.7" y2="151.2" stroke="#eee" stroke-width="11" stroke-linecap="round"/>
+<line x1="168.0" y1="192.0" x2="267.6" y2="128.8" stroke="#eee" stroke-width="8" stroke-linecap="round"/>
+<line x1="179.8" y1="175.8" x2="91.6" y2="297.2" stroke="#2ec4b6" stroke-width="2.5" stroke-linecap="round"/>
+<circle cx="168.0" cy="192.0" r="8" fill="#eee"/><circle cx="168.0" cy="192.0" r="3" fill="#2ec4b6"/>
+
+</g></svg>

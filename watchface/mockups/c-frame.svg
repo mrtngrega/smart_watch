@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="336" height="384" viewBox="0 0 336 384">
+<defs><clipPath id="screen"><rect width="336" height="384" rx="80"/></clipPath></defs>
+<rect width="336" height="384" fill="#111"/>
+<g clip-path="url(#screen)"><rect width="336" height="384" fill="#000"/>
+
+<rect x="12" y="12" width="312" height="360" rx="68" fill="none" stroke="#2ec4b6" stroke-width="1.5" opacity="0.7"/>
+<line x1="168.0" y1="26.0" x2="168.0" y2="42.0" stroke="#eee" stroke-width="5" stroke-linecap="round"/><line x1="263.5" y1="26.5" x2="258.6" y2="35.1" stroke="#eee" stroke-width="3" stroke-linecap="round"/><line x1="310.0" y1="110.0" x2="301.0" y2="115.2" stroke="#eee" stroke-width="3" stroke-linecap="round"/><line x1="310.0" y1="192.0" x2="294.0" y2="192.0" stroke="#eee" stroke-width="5" stroke-linecap="round"/><line x1="310.0" y1="274.0" x2="301.0" y2="268.8" stroke="#eee" stroke-width="3" stroke-linecap="round"/><line x1="263.5" y1="357.5" x2="258.6" y2="348.9" stroke="#eee" stroke-width="3" stroke-linecap="round"/><line x1="168.0" y1="358.0" x2="168.0" y2="342.0" stroke="#eee" stroke-width="5" stroke-linecap="round"/><line x1="72.5" y1="357.5" x2="77.4" y2="348.9" stroke="#eee" stroke-width="3" stroke-linecap="round"/><line x1="26.0" y1="274.0" x2="35.0" y2="268.8" stroke="#eee" stroke-width="3" stroke-linecap="round"/><line x1="26.0" y1="192.0" x2="42.0" y2="192.0" stroke="#eee" stroke-width="5" stroke-linecap="round"/><line x1="26.0" y1="110.0" x2="35.0" y2="115.2" stroke="#eee" stroke-width="3" stroke-linecap="round"/><line x1="72.5" y1="26.5" x2="77.4" y2="35.1" stroke="#eee" stroke-width="3" stroke-linecap="round"/>
+<line x1="70" y1="252.0" x2="266" y2="252.0" stroke="#333" stroke-width="1"/>
+<text x="162.0" y="288.0" text-anchor="end" font-family="Segoe UI, Roboto, sans-serif" font-size="28" font-weight="600" fill="#eee">10:09</text>
+<text x="174.0" y="274.0" text-anchor="start" font-family="Segoe UI, Roboto, sans-serif" font-size="12" letter-spacing="1.5" fill="#2ec4b6">THU</text>
+<text x="174.0" y="289.0" text-anchor="start" font-family="Segoe UI, Roboto, sans-serif" font-size="12" letter-spacing="1.5" fill="#aaa">19 NOV</text>
+<line x1="168.0" y1="192.0" x2="107.0" y2="150.1" stroke="#eee" stroke-width="6" stroke-linecap="butt"/>
+<line x1="168.0" y1="192.0" x2="272.7" y2="125.6" stroke="#eee" stroke-width="4" stroke-linecap="butt"/>
+<line x1="180.9" y1="174.2" x2="88.1" y2="302.0" stroke="#2ec4b6" stroke-width="1.5" stroke-linecap="round"/>
+<circle cx="168.0" cy="192.0" r="5" fill="#eee"/>
+
+</g></svg>
