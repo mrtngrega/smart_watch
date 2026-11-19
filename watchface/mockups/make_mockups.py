@@ -140,8 +140,8 @@ def design_d():
     h, m, s = angles()
     return svg(f"""
 {ticks(8, 18, 7, 4, 2, between=3)}
-<text x="{CX}" y="{CY-62}" text-anchor="middle" {FONT} font-size="30" font-weight="300" fill="#eee">10:09</text>
-<text x="{CX}" y="{CY-40}" text-anchor="middle" {FONT} font-size="13" letter-spacing="2" fill="{TEAL}">THU · 19 NOV</text>
+<text x="{CX}" y="{CY+92}" text-anchor="middle" {FONT} font-size="48" font-weight="300" fill="#eee">10:09</text>
+<text x="{CX}" y="{CY+120}" text-anchor="middle" {FONT} font-size="18" letter-spacing="3" fill="{TEAL}">THU · 19 NOV</text>
 {hand(h, 78, 7, "#eee")}
 {hand(m, 128, 5, "#eee")}
 {hand(s, 140, 2, TEAL, tail=24)}

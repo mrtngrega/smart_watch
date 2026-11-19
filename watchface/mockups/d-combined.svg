@@ -51,8 +51,8 @@
 <line x1="91.8" y1="8.0" x2="94.7" y2="15.0" stroke="#555" stroke-width="2" stroke-linecap="round"/>
 <line x1="118.7" y1="8.0" x2="120.6" y2="15.0" stroke="#555" stroke-width="2" stroke-linecap="round"/>
 <line x1="143.8" y1="8.0" x2="144.7" y2="15.0" stroke="#555" stroke-width="2" stroke-linecap="round"/>
-<text x="168.0" y="130.0" text-anchor="middle" font-family="Segoe UI, Roboto, sans-serif" font-size="30" font-weight="300" fill="#eee">10:09</text>
-<text x="168.0" y="152.0" text-anchor="middle" font-family="Segoe UI, Roboto, sans-serif" font-size="13" letter-spacing="2" fill="#2ec4b6">THU · 19 NOV</text>
+<text x="168.0" y="284.0" text-anchor="middle" font-family="Segoe UI, Roboto, sans-serif" font-size="48" font-weight="300" fill="#eee">10:09</text>
+<text x="168.0" y="312.0" text-anchor="middle" font-family="Segoe UI, Roboto, sans-serif" font-size="18" letter-spacing="3" fill="#2ec4b6">THU · 19 NOV</text>
 <line x1="168.0" y1="192.0" x2="103.7" y2="147.8" stroke="#eee" stroke-width="7" stroke-linecap="round"/>
 <line x1="168.0" y1="192.0" x2="276.1" y2="123.4" stroke="#eee" stroke-width="5" stroke-linecap="round"/>
 <line x1="182.1" y1="172.6" x2="85.7" y2="305.3" stroke="#2ec4b6" stroke-width="2" stroke-linecap="round"/>
