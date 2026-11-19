@@ -108,14 +108,13 @@ function glassHand(face, len, tail, width, blade = true) {
   const clip = pts.map(([x, y]) => `${x}px ${y}px`).join(", ");
   el.innerHTML = (blade ? `<div class="blade" style="clip-path: polygon(${clip})"></div>` : "") +
     `<svg width="${w}" height="${len + tail}">
-       <polygon points="${poly}" fill="${blade ? "none" : "rgba(255,255,255,.55)"}" stroke="rgba(255,255,255,.75)" stroke-width="1" stroke-linejoin="round"/>
-       ${blade ? `<line x1="${w * 0.36}" y1="${len * 0.3}" x2="${w * 0.36}" y2="${len * 0.92}" stroke="rgba(255,255,255,.7)" stroke-width="${Math.max(w * 0.1, 1)}" stroke-linecap="round"/>` : ""}
+       <polygon points="${poly}" fill="${blade ? "none" : "rgba(255,255,255,.55)"}" stroke="rgba(255,255,255,.75)" stroke-width="${blade ? 0.75 : 1}" stroke-linejoin="round"/>
      </svg>`;
   face.appendChild(el);
   return el;
 }
 const e = document.getElementById("e");
-const eh = glassHand(e, 82, 12, 24), em = glassHand(e, 134, 12, 18), es = glassHand(e, 142, 26, 3, false);
+const eh = glassHand(e, 82, 12, 16), em = glassHand(e, 134, 12, 12), es = glassHand(e, 142, 26, 3, false);
 const cap = document.createElement("div");
 cap.className = "hand cap";
 Object.assign(cap.style, { left: CX - 8 + "px", top: CY - 8 + "px", width: "16px", height: "16px" });
