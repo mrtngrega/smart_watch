@@ -1,0 +1,30 @@
+{
+  "configVersion": "v2",
+  "app": {
+    "appId": 1000001,
+    "appName": "Glass",
+    "appType": "watchface",
+    "version": { "code": 1, "name": "1.0.0" },
+    "icon": "icon.png",
+    "vender": "mrtngrega",
+    "description": "Minimal analog face with liquid glass hands and a digital time"
+  },
+  "permissions": [],
+  "runtime": {
+    "apiVersion": { "compatible": "1.0.0", "target": "1.0.1", "minVersion": "1.0.0" }
+  },
+  "targets": {
+    "gts4-mini": {
+      "module": {
+        "watchface": { "path": "watchface/index", "main": 1, "editable": 0, "lockscreen": 0 }
+      },
+      "platforms": [
+        { "name": "gts4mini", "deviceSource": 246 },
+        { "name": "gts4mini", "deviceSource": 247 }
+      ],
+      "designWidth": 336
+    }
+  },
+  "i18n": { "en-US": { "appName": "Glass" } },
+  "defaultLanguage": "en-US"
+}
