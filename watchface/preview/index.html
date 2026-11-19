@@ -1,0 +1,137 @@
+<!doctype html>
+<!-- Live preview of the watch face designs at the GTS 4 Mini's real size (336x384, corner radius 80), shown 1.5x. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Watch faces · GTS 4 Mini</title>
+<style>
+  body { margin: 0; min-height: 100vh; background: #1c1d1f; color: #aaa; font: 14px "Segoe UI", Roboto, sans-serif;
+         display: flex; gap: 72px; align-items: center; justify-content: center; flex-wrap: wrap; padding: 40px; box-sizing: border-box; }
+  figure { margin: 0; text-align: center; }
+  figcaption { margin-top: 24px; }
+  figcaption b { color: #eee; font-weight: 600; }
+  .scale { width: 504px; height: 576px; }
+  .face { position: relative; width: 336px; height: 384px; border-radius: 80px; overflow: hidden; background: #000;
+          transform: scale(1.5); transform-origin: 0 0; box-shadow: 0 0 0 10px #0b0b0c, 0 0 0 11px #333; }
+  .face svg { position: absolute; inset: 0; }
+  .digits { font-family: "Segoe UI", Roboto, sans-serif; }
+
+  /* Liquid glass hands (design E) */
+  .glass { position: absolute; border-radius: 999px;
+           background: linear-gradient(90deg, rgba(255,255,255,.34), rgba(255,255,255,.07) 35%, rgba(255,255,255,.03) 65%, rgba(255,255,255,.26));
+           backdrop-filter: blur(2.5px) brightness(1.9) saturate(1.6);
+           border: 1px solid rgba(255,255,255,.6);
+           box-shadow: inset 0 1px 2px rgba(255,255,255,.55), inset 0 -1px 3px rgba(255,255,255,.18), 0 3px 10px rgba(0,0,0,.7); }
+  .glass::after { content: ""; position: absolute; left: 22%; top: 6px; bottom: 6px; width: 18%; border-radius: 999px;
+                  background: linear-gradient(180deg, rgba(255,255,255,.75), rgba(255,255,255,.1)); opacity: .55; }
+  .glass.sec::after { display: none; }
+  .glass.sec { background: rgba(255,255,255,.14); border-color: rgba(255,255,255,.8); }
+  .glass.cap { border-radius: 50%; }
+</style>
+</head>
+<body>
+<figure><div class="scale"><div class="face" id="d"></div></div><figcaption><b>D · Chrome accent</b> (saved)</figcaption></figure>
+<figure><div class="scale"><div class="face" id="e"></div></div><figcaption><b>E · Chrome ticks, liquid glass hands</b> (live shine)</figcaption></figure>
+
+<script>
+const W = 336, H = 384, CX = W / 2, CY = H / 2, R = 80, NS = "http://www.w3.org/2000/svg";
+
+// Point on the rounded-rect screen edge, `inset` px inward, at a clock angle (0 = 12 o'clock).
+function edge(deg, inset) {
+  const a = deg * Math.PI / 180, dx = Math.sin(a), dy = -Math.cos(a);
+  const hx = W / 2 - inset, hy = H / 2 - inset, r = Math.max(R - inset, 1);
+  let t = Math.min(dx ? hx / Math.abs(dx) : 1e9, dy ? hy / Math.abs(dy) : 1e9);
+  let px = t * dx, py = t * dy;
+  if (Math.abs(px) > hx - r && Math.abs(py) > hy - r) {
+    const ox = Math.sign(px) * (hx - r), oy = Math.sign(py) * (hy - r);
+    const b = dx * ox + dy * oy, c = ox * ox + oy * oy - r * r;
+    t = b + Math.sqrt(b * b - c); px = t * dx; py = t * dy;
+  }
+  return [CX + px, CY + py];
+}
+
+// Hour ticks plus 3 small ticks inside each hour.
+function ticks(major, minor) {
+  let s = "";
+  for (let k = 0; k < 48; k++) {
+    const big = k % 4 === 0, deg = k * 7.5, len = big ? 18 : 7;
+    const [x1, y1] = edge(deg, 8), [x2, y2] = edge(deg, 8 + len);
+    s += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${big ? major : minor}" stroke-width="${big ? 4 : 2}" stroke-linecap="round"/>`;
+  }
+  return s;
+}
+
+const chromeStops = `<stop offset="0" stop-color="#b9c0c7"/><stop offset=".2" stop-color="#fff"/><stop offset=".32" stop-color="#6c747d"/>
+  <stop offset=".5" stop-color="#f6f8fa"/><stop offset=".68" stop-color="#7f8790"/><stop offset=".82" stop-color="#fff"/><stop offset="1" stop-color="#aab1b8"/>`;
+
+function digital(dateFill) {
+  return `<text class="digits" x="${CX}" y="${CY + 92}" text-anchor="middle" font-size="48" font-weight="300" fill="#eee" data-time></text>
+    <text class="digits" x="${CX}" y="${CY + 120}" text-anchor="middle" font-size="18" letter-spacing="3" fill="${dateFill}" data-date></text>`;
+}
+
+function svgLine(len, tail, width, color) {
+  return `<line x1="${CX}" y1="${CY + tail}" x2="${CX}" y2="${CY - len}" stroke="${color}" stroke-width="${width}" stroke-linecap="round"/>`;
+}
+
+// Design D: white ticks and hands, chrome date, second hand and cap.
+document.getElementById("d").innerHTML = `<svg width="${W}" height="${H}">
+  <defs>
+    <linearGradient id="dText" gradientUnits="userSpaceOnUse" x1="${CX - 100}" y1="0" x2="${CX + 100}" y2="0">${chromeStops}</linearGradient>
+    <radialGradient id="dDome" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#fff"/><stop offset=".35" stop-color="#c9ced3"/>
+      <stop offset=".6" stop-color="#6a727b"/><stop offset=".85" stop-color="#d9dde1"/><stop offset="1" stop-color="#8b939b"/></radialGradient>
+  </defs>
+  ${ticks("#ddd", "#555")}
+  ${digital("url(#dText)")}
+  <g data-hand="h">${svgLine(78, 0, 7, "#eee")}</g>
+  <g data-hand="m">${svgLine(128, 0, 5, "#eee")}</g>
+  <g data-hand="s">${svgLine(140, 24, 3.5, "#7d858e")}${svgLine(138, 22, 1.2, "#fff")}</g>
+  <circle cx="${CX}" cy="${CY}" r="7.5" fill="url(#dDome)"/><circle cx="${CX}" cy="${CY}" r="2.5" fill="#000"/>
+</svg>`;
+
+// Design E: chrome ticks whose shine turns with the second hand, glass hands over a faint dial.
+document.getElementById("e").innerHTML = `<svg width="${W}" height="${H}">
+  <defs>
+    <radialGradient id="eDial" cx=".5" cy=".5" r=".7"><stop offset="0" stop-color="#16181b"/><stop offset="1" stop-color="#000"/></radialGradient>
+    <linearGradient id="eChrome" gradientUnits="userSpaceOnUse" x1="${CX - 190}" y1="${CY}" x2="${CX + 190}" y2="${CY}">${chromeStops}</linearGradient>
+    <linearGradient id="eText" gradientUnits="userSpaceOnUse" x1="${CX - 100}" y1="0" x2="${CX + 100}" y2="0">${chromeStops}</linearGradient>
+  </defs>
+  <rect width="${W}" height="${H}" fill="url(#eDial)"/>
+  ${ticks("url(#eChrome)", "url(#eChrome)")}
+  ${digital("url(#eText)")}
+</svg>`;
+
+function glassHand(face, cls, len, tail, width) {
+  const el = document.createElement("div");
+  el.className = "glass " + cls;
+  Object.assign(el.style, { left: CX - width / 2 + "px", top: CY - len + "px", width: width + "px", height: len + tail + "px",
+                            transformOrigin: `50% ${len}px` });
+  face.appendChild(el);
+  return el;
+}
+const e = document.getElementById("e");
+const eh = glassHand(e, "", 80, 10, 14), em = glassHand(e, "", 130, 10, 10), es = glassHand(e, "sec", 142, 26, 4);
+const cap = glassHand(e, "cap", 8, 8, 16);
+
+const DAYS = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
+const MONTHS = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+
+function frame() {
+  const now = new Date();
+  const s = now.getSeconds() + now.getMilliseconds() / 1000, m = now.getMinutes() + s / 60, h = (now.getHours() % 12) + m / 60;
+  const deg = { h: h * 30, m: m * 6, s: s * 6 };
+  const time = `${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}`;
+  const date = `${DAYS[now.getDay()]} · ${now.getDate()} ${MONTHS[now.getMonth()]}`;
+
+  document.querySelectorAll("[data-time]").forEach(t => t.textContent = time);
+  document.querySelectorAll("[data-date]").forEach(t => t.textContent = date);
+  document.querySelectorAll("#d [data-hand]").forEach(g => g.setAttribute("transform", `rotate(${deg[g.dataset.hand]} ${CX} ${CY})`));
+
+  eh.style.transform = `rotate(${deg.h}deg)`; em.style.transform = `rotate(${deg.m}deg)`; es.style.transform = `rotate(${deg.s}deg)`;
+  // The chrome shine sweeps round the ticks with the second hand.
+  document.getElementById("eChrome").setAttribute("gradientTransform", `rotate(${deg.s} ${CX} ${CY})`);
+  requestAnimationFrame(frame);
+}
+frame();
+</script>
+</body>
+</html>
