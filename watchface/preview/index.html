@@ -94,6 +94,10 @@ document.getElementById("e").innerHTML = `<svg width="${W}" height="${H}">
   </defs>
   <rect width="${W}" height="${H}" fill="url(#eDial)"/>
   ${ticks("url(#eChrome)", "url(#eChrome)")}
+  ${[[0, "12"], [90, "3"], [180, "6"], [270, "9"]].map(([deg, n]) => {
+    const [x, y] = edge(deg, 40);
+    return `<text class="digits" x="${x}" y="${y + 5.5}" text-anchor="middle" font-size="16" font-weight="500" fill="url(#eChrome)">${n}</text>`;
+  }).join("")}
   ${digital("url(#eText)")}
 </svg>`;
 
@@ -114,7 +118,7 @@ function glassHand(face, len, tail, width, blade = true) {
   return el;
 }
 const e = document.getElementById("e");
-const eh = glassHand(e, 82, 12, 16), em = glassHand(e, 134, 12, 12), es = glassHand(e, 142, 26, 3, false);
+const eh = glassHand(e, 82, 0, 16), em = glassHand(e, 134, 0, 12), es = glassHand(e, 142, 26, 3, false);
 const cap = document.createElement("div");
 cap.className = "hand cap";
 Object.assign(cap.style, { left: CX - 8 + "px", top: CY - 8 + "px", width: "16px", height: "16px" });
