@@ -39,10 +39,13 @@ def edge_point(deg, inset):
     return CX + px, CY + py
 
 
-def ticks(inset, long_len, short_len, long_w, short_w, color="#ddd", short_color="#555", every=6):
+def ticks(inset, long_len, short_len, long_w, short_w, color="#ddd", short_color="#555", between=4):
+    """Hour ticks plus `between` small ticks inside each hour."""
     out = []
-    for i in range(0, 360, every):
-        major = i % 30 == 0
+    step = 30 / (between + 1)
+    for k in range(12 * (between + 1)):
+        i = k * step
+        major = k % (between + 1) == 0
         ln = long_len if major else short_len
         x1, y1 = edge_point(i, inset)
         x2, y2 = edge_point(i, inset + ln)
@@ -132,7 +135,21 @@ def design_c():
 """)
 
 
+def design_d():
+    """The user's pick: A's ticks (3 between hours) and hands, B's digital time above the centre."""
+    h, m, s = angles()
+    return svg(f"""
+{ticks(8, 18, 7, 4, 2, between=3)}
+<text x="{CX}" y="{CY-62}" text-anchor="middle" {FONT} font-size="30" font-weight="300" fill="#eee">10:09</text>
+<text x="{CX}" y="{CY-40}" text-anchor="middle" {FONT} font-size="13" letter-spacing="2" fill="{TEAL}">THU · 19 NOV</text>
+{hand(h, 78, 7, "#eee")}
+{hand(m, 128, 5, "#eee")}
+{hand(s, 140, 2, TEAL, tail=24)}
+<circle cx="{CX}" cy="{CY}" r="6" fill="{TEAL}"/><circle cx="{CX}" cy="{CY}" r="2.5" fill="#000"/>
+""")
+
+
 if __name__ == "__main__":
-    for name, fn in (("a-classic", design_a), ("b-bauhaus", design_b), ("c-frame", design_c)):
+    for name, fn in (("a-classic", design_a), ("b-bauhaus", design_b), ("c-frame", design_c), ("d-combined", design_d)):
         (OUT / f"{name}.svg").write_text(fn(), encoding="utf-8")
         print("wrote", name)
