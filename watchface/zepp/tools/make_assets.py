@@ -45,33 +45,23 @@ def edge_point(deg, inset):
     return CX + px, CY + py
 
 
-def dial(with_glow):
-    """Dial: ticks (3 small between hours) and the numbers 12/3/6/9. Black, or a faint centre glow."""
+def dial():
+    """Dial: ticks (3 small between hours) and the numbers 12/3/6/9, on plain black."""
     img = Image.new("RGB", (W * S, H * S), (0, 0, 0))
-    if with_glow:
-        glow = Image.new("RGB", (W * S, H * S))
-        px = glow.load()
-        for y in range(0, H * S):
-            for x in range(0, W * S):
-                d = math.hypot((x / S - CX) / (W * 0.7), (y / S - CY) / (H * 0.7))
-                v = max(0.0, 1 - d / 0.7)
-                c = int(22 * v)
-                px[x, y] = (c, c + 1, c + 2)
-        img = glow
     d = ImageDraw.Draw(img)
     white = (255, 255, 255)
     for k in range(48):
         big = k % 4 == 0
         deg = k * 7.5
-        x1, y1 = edge_point(deg, 8)
-        x2, y2 = edge_point(deg, 8 + (18 if big else 7))
+        x1, y1 = edge_point(deg, 3)
+        x2, y2 = edge_point(deg, 3 + (18 if big else 7))
         width = (4 if big else 2) * S
         d.line([(x1 * S, y1 * S), (x2 * S, y2 * S)], fill=white, width=width)
         for x, y in ((x1, y1), (x2, y2)):  # round caps
             d.ellipse([x * S - width / 2, y * S - width / 2, x * S + width / 2, y * S + width / 2], fill=white)
     font = ImageFont.truetype(str(SEMIBOLD), 16 * S)
     for deg, n in ((0, "12"), (90, "3"), (180, "6"), (270, "9")):
-        x, y = edge_point(deg, 40)
+        x, y = edge_point(deg, 35)
         d.text((x * S, y * S), n, font=font, fill=white, anchor="mm")
     return down(img)
 
@@ -113,19 +103,34 @@ def second_hand():
     return down(img), 2, length
 
 
+CAP = 16  # centre cap size in px
+
+
 def cap():
-    """Glass dome for the centre, 16x16."""
-    size = 16 * S
+    """Chrome ball for the centre, CAP x CAP, fully opaque and smooth: light top, darker bottom with a soft
+    bounce light at the rim, and a soft shine spot upper left. No hard bands."""
+    size = CAP * S
     img = Image.new("RGBA", (size, size), (0, 0, 0, 0))
     px = img.load()
+
+    def smooth(e0, e1, x):
+        t = max(0.0, min(1.0, (x - e0) / (e1 - e0)))
+        return t * t * (3 - 2 * t)
+
     for y in range(size):
         for x in range(size):
             dx, dy = (x + 0.5 - size / 2) / (size / 2), (y + 0.5 - size / 2) / (size / 2)
             r = math.hypot(dx, dy)
-            if r <= 1:
-                hl = max(0.0, 1 - math.hypot(dx + 0.35, dy + 0.4) / 0.9)  # highlight, upper left
-                a = 0.16 + 0.55 * hl + (0.45 if r > 0.9 else 0)  # clear body, bright rim
-                px[x, y] = (255, 255, 255, int(255 * min(a, 1)))
+            if r > 1:
+                continue
+            t = (dy + 1) / 2  # 0 at the top, 1 at the bottom
+            v = 0.95 - 0.76 * smooth(0.0, 0.80, t)
+            v += 0.30 * math.exp(-(((t - 0.86) / 0.12) ** 2))  # soft bounce light near the bottom rim
+            v *= 1 - 0.55 * smooth(0.72, 1.0, r)  # soft darker edge
+            hl = math.exp(-((math.hypot(dx + 0.34, dy + 0.40) / 0.36) ** 2))  # shine spot
+            v = v + (1 - v) * hl * 1.0
+            c = int(255 * max(0.0, min(1.0, v)))
+            px[x, y] = (c, min(255, c + 3), min(255, c + 8), 255)
     return down(img)
 
 
@@ -151,17 +156,12 @@ def text_cells(items, font_path, size, cell_w=None, pad=0, spacing=0):
 
 
 if __name__ == "__main__":
-    save(dial(True), "dial.png")
-    save(dial(False), "dial_aod.png")
+    save(dial(), "dial.png")
 
     img, px_, py_ = blade(16, 82, True)
     save(img, "hour.png"); print("hour", img.size, "pivot", px_, py_)
     img, px_, py_ = blade(12, 134, True)
     save(img, "minute.png"); print("minute", img.size, "pivot", px_, py_)
-    img, px_, py_ = blade(16, 82, False)
-    save(img, "hour_aod.png")
-    img, px_, py_ = blade(12, 134, False)
-    save(img, "minute_aod.png")
     img, px_, py_ = second_hand()
     save(img, "second.png"); print("second", img.size, "pivot", px_, py_)
     save(cap(), "cap.png")
@@ -208,8 +208,8 @@ if __name__ == "__main__":
         face.alpha_composite(Image.open(OUT / f"{name}.png"), (int(CX - 73 + dx), 293))
     paste_hand("hour.png", 304.5, (8, 81))
     paste_hand("minute.png", 54.6, (6, 133))
+    face.alpha_composite(Image.open(OUT / "cap.png"), (int(CX) - CAP // 2, int(CY) - CAP // 2))
     paste_hand("second.png", 216, (2, 142))
-    face.alpha_composite(Image.open(OUT / "cap.png"), (int(CX - 8), int(CY - 8)))
     face.convert("RGB").save(OUT / "preview_full.png")
     face.convert("RGB").resize((228, 260), Image.LANCZOS).save(OUT / "icon.png")
     print("wrote", len(list(OUT.glob("*.png"))), "files to", OUT)
