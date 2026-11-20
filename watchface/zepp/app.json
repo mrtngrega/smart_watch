@@ -1,7 +1,7 @@
 {
   "configVersion": "v2",
   "app": {
-    "appId": 1000001,
+    "appId": 1000003,
     "appName": "Glass",
     "appType": "watchface",
     "version": { "code": 1, "name": "1.0.0" },
